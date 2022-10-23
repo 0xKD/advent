@@ -1,21 +1,12 @@
 from collections import namedtuple
 from typing import List, Tuple
 
-_INSTRUCTIONS = """
-R2, L5, L4, L5, R4, R1, L4, R5, R3, R1, L1, L1, R4, L4, L1, R4, L4, R4, L3,
-R5, R4, R1, R3, L1, L1, R1, L2, R5, L4, L3, R1, L2, L2, R192, L3, R5, R48,
-R5, L2, R76, R4, R2, R1, L1, L5, L1, R185, L5, L1, R5, L4, R1, R3, L4, L3,
-R1, L5, R4, L4, R4, R5, L3, L1, L2, L4, L3, L4, R2, R2, L3, L5, R2, R5, L1,
-R1, L3, L5, L3, R4, L4, R3, L1, R5, L3, R2, R4, R2, L1, R3, L1, L3, L5, R4,
-R5, R2, R2, L5, L3, L1, L1, L5, L2, L3, R3, R3, L3, L4, L5, R2, L1, R1, R3,
-R4, L2, R1, L1, R3, R3, L4, L2, R5, R5, L1, R4, L5, L5, R1, L5, R4, R2, L1,
-L4, R1, L1, L1, L5, R3, R4, L2, R1, R2, R1, R1, R3, L5, R1, R4
-"""
-
-INSTRUCTIONS = [
-    [direction.strip(), int("".join(distance))]
-    for direction, *distance in [_.strip() for _ in _INSTRUCTIONS.strip().split(",")]
-]
+def get_instructions(file="input.txt"):
+    with open(file, "r") as f:
+        return [
+            [direction.strip(), int("".join(distance))]
+            for direction, *distance in [_.strip() for _ in f.read().strip().split(",")]
+        ]
 
 
 def find_distance(x1, y1, x2, y2, distance=0):
@@ -55,5 +46,5 @@ def find_destination(
 
 
 if __name__ == "__main__":
-    dest = find_destination([Instruction(*_) for _ in INSTRUCTIONS])
+    dest = find_destination([Instruction(*_) for _ in get_instructions()])
     print(find_distance(0, 0, *dest))
